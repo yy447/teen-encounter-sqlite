@@ -1,3 +1,5 @@
+"""Test filter_adolescents()."""
+
 from datetime import date
 
 import pytest
