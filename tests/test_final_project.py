@@ -1,4 +1,4 @@
-"""Final Project Functions Testing."""
+"""Test load_patients() and load_encounters()."""
 
 import os
 import tempfile
