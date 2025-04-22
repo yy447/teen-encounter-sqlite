@@ -1,4 +1,4 @@
-"""Final Project Functions Testing."""
+"""Test load_patients() and load_encounters()."""
 
 import os
 import tempfile
@@ -6,7 +6,7 @@ from datetime import date
 
 import pytest
 
-from src.load_data import Encounter, Patient, load_encounters, load_patients
+from load_data import Encounter, Patient, load_encounters, load_patients
 
 
 def test_load_patients_tempfile() -> None:

@@ -1,4 +1,4 @@
-"""Load Data."""
+"""Map Data."""
 
 import pandas as pd
 
