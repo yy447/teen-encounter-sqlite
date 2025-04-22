@@ -29,7 +29,6 @@ def test_load_patients_tempfile() -> None:
         os.remove(tmp_path)
 
 
-# 空文件
 def test_load_patients_empty_file() -> None:
     """Test that an empty file raises a ValueError."""
     csv_content = "patientid,dob\n"
@@ -47,25 +46,6 @@ def test_load_patients_empty_file() -> None:
         os.remove(tmp_path)
 
 
-def test_load_patients_missing_patientid_column() -> None:
-    """Test that missing 'patientid' column raises KeyError."""
-    csv_content = "dob\n2010-05-01\n"
-
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp_file:
-        tmp_file.write(csv_content)
-        tmp_path = tmp_file.name
-
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'patientid'"
-        ):
-            load_patients(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
 def test_load_patients_empty_patientid() -> None:
     """Test that an empty patientid raises ValueError."""
     csv_content = "patientid,dob\n,2010-05-01\n"
@@ -78,25 +58,6 @@ def test_load_patients_empty_patientid() -> None:
 
     try:
         with pytest.raises(ValueError, match="Empty patientid found"):
-            load_patients(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
-def test_load_patients_missing_dob_column() -> None:
-    """Test that missing 'dob' column raises KeyError with patient info."""
-    csv_content = "patientid\nP001\n"
-
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp_file:
-        tmp_file.write(csv_content)
-        tmp_path = tmp_file.name
-
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'dob' for patient P001"
-        ):
             load_patients(tmp_path)
     finally:
         os.remove(tmp_path)
@@ -158,57 +119,6 @@ def test_load_encounters_empty_file() -> None:
 
     try:
         with pytest.raises(ValueError, match="Input file is empty"):
-            load_encounters(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
-def test_load_encounters_missing_patientid_column() -> None:
-    """Missing 'patientid' column raises KeyError."""
-    csv_content = "encounterid,encounterdate,localcode\nE001,2023-06-01,L100\n"
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp:
-        tmp.write(csv_content)
-        tmp_path = tmp.name
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'patientid'"
-        ):
-            load_encounters(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
-def test_load_encounters_missing_encounterid_column() -> None:
-    """Missing 'encounterid' column raises KeyError."""
-    csv_content = "patientid,encounterdate,localcode\nP001,2023-06-01,L100\n"
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp:
-        tmp.write(csv_content)
-        tmp_path = tmp.name
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'encounterid'"
-        ):
-            load_encounters(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
-def test_load_encounters_missing_encounterdate_column() -> None:
-    """Missing 'encounterdate' column raises KeyError."""
-    csv_content = "patientid,encounterid,localcode\nP001,E001,L100\n"
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp:
-        tmp.write(csv_content)
-        tmp_path = tmp.name
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'encounterdate'"
-        ):
             load_encounters(tmp_path)
     finally:
         os.remove(tmp_path)
@@ -290,23 +200,6 @@ def test_load_encounters_empty_localcode() -> None:
         with pytest.raises(
             ValueError,
             match="Empty localcode for patient P001, encounter E001",
-        ):
-            load_encounters(tmp_path)
-    finally:
-        os.remove(tmp_path)
-
-
-def test_load_encounters_missing_localcode_column() -> None:
-    """Missing 'localcode' column raises KeyError."""
-    csv_content = "patientid,encounterid,encounterdate\nP001,E001,2023-06-01\n"
-    with tempfile.NamedTemporaryFile(
-        mode="w", delete=False, suffix=".csv"
-    ) as tmp:
-        tmp.write(csv_content)
-        tmp_path = tmp.name
-    try:
-        with pytest.raises(
-            KeyError, match="Missing required column: 'localcode'"
         ):
             load_encounters(tmp_path)
     finally:

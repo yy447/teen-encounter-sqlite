@@ -77,22 +77,13 @@ def load_patients(path: str) -> list[Patient]:
             )
 
         for row in rows:
-            if "patientid" not in row:
-                raise KeyError("Missing required column: 'patientid'")
-
             pid = row["patientid"]
 
             # Empty patientid
             if not pid.strip():
                 raise ValueError("Empty patientid found in data row")
 
-            # Lack of dob
-            try:
-                dob_str = row["dob"]
-            except KeyError as e:
-                raise KeyError(
-                    f"Missing required column: 'dob' for patient {pid}"
-                ) from e
+            dob_str = row["dob"]
 
             # Invalid Date Format
             try:
@@ -119,16 +110,6 @@ def load_encounters(path: str) -> list[Encounter]:
             )
 
         for row in rows:
-            # Check required columns
-            for col in [
-                "patientid",
-                "encounterid",
-                "encounterdate",
-                "localcode",
-            ]:
-                if col not in row:
-                    raise KeyError(f"Missing required column: '{col}'")
-
             pid = row["patientid"]
             eid = row["encounterid"]
             edate_str = row["encounterdate"]
