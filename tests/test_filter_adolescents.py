@@ -4,8 +4,8 @@ from datetime import date
 
 import pytest
 
-from src.filter_adolescents import filter_adolescents
-from src.load_data import Encounter, Patient
+from filter_adolescents import filter_adolescents
+from load_data import Encounter, Patient
 
 
 def test_patientid_not_found_error() -> None:

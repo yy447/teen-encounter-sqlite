@@ -56,9 +56,7 @@ def filter_adolescents(
     for e in encounters:
         dob = patient_lookup.get(e.patientid)
         if dob is None:
-            raise ValueError(
-                f"Encounter patientid '{e.patientid}' not found in patient list."
-            )
+            raise ValueError(f"Encounter patientid '{e.patientid}' not found.")
 
         if e.encounterdate < dob:
             raise ValueError(
