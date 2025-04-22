@@ -6,7 +6,7 @@ from datetime import date
 
 import pytest
 
-from src.load_data import Encounter, Patient, load_encounters, load_patients
+from load_data import Encounter, Patient, load_encounters, load_patients
 
 
 def test_load_patients_tempfile() -> None:
